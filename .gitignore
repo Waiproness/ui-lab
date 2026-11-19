@@ -11,3 +11,9 @@ robot/output.xml
 robot/log.html
 robot/report.html
 robot/*.png
+robot/wrong-title-output/
+cypress/cypress/screenshots/web-form-wrong.cy.js/
+cypress/cypress/screenshots/*/* (*).png
+cypress/cypress/videos/* (*).mp4
+cypress/cypress/videos/*-compressed*.mp4
+cypress/cypress/videos/web-form-wrong.cy.js.mp4

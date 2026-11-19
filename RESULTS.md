@@ -10,33 +10,34 @@ Tool parts that I chose: Part 3 Robot Framework and Part 4 Cypress.
 - Step 0.4, locator of Excluded tools: `select` after Advanced is on.
 - Step 0.4, locator of Must be vegetarian: `#default-checkbox`.
 - Step 0.4, locator of Custom Pizza Name: `input#pizza-name`.
-- Step 0.5: **Manual run still needed.** Automated QP-01 on 20 November 2026 created `Lab Pizza 20261120-001717`, tool `Pizza cutter`, 325 calories per slice, and passed all seven checks. This is automated evidence, not a hand run.
+- Step 0.5, manual attempt 1: `Lab Pizza 20261120-143015` returned Pizza cutter and 450 calories per slice; the rating message appeared, but the pizza was absent from the visible admin list even after Refresh. Step 7 was **not observed as passing**. See `manual-evidence/qp01-step5-recommendation-and-login-needed.png` and `qp01-attempt1-admin-absent.png`.
+- Step 0.5, manual attempt 2: `Lab Pizza 20261120 2times` returned Pizza cutter and 550 calories per slice. The admin list showed `Lab Pizza 20261120 2times (tool=Pizza cutter, ingredients_number=8)`, so step 7 passed. The name contains a date but **does not contain a time in the required `YYYYMMDD-HHMMSS` format**; the step 5 rating message was not captured for this attempt. See `manual-evidence/qp01-attempt2-recommendation.png` and `qp01-attempt2-admin-list.png`.
 
-| Step | Actual result from automated Robot run 2 | Pass or fail |
-|------|------------------------------------------|--------------|
+| Step | Actual result from manual attempt 2 | Pass or fail |
+|------|-------------------------------------|--------------|
 | 1 | Home heading matched the expected text. | Pass |
 | 2 | All four advanced fields were visible. | Pass |
-| 3 | Limit 600, excluded Knife, vegetarian selected, timestamped name. | Pass |
-| 4 | Name matched; tool Pizza cutter; 325 calories per slice. | Pass |
-| 5 | Page said `Please log in first.` | Pass |
+| 3 | Limit 600, excluded Knife, vegetarian selected, name `Lab Pizza 20261120 2times`. | Partial: name format |
+| 4 | Name matched; tool Pizza cutter; 550 calories per slice. | Pass |
+| 5 | Rating response was not captured for attempt 2. | Unverified |
 | 6 | Admin page showed `Latest pizza recommendations`. | Pass |
-| 7 | Admin list contained the pizza and Pizza cutter. | Pass |
+| 7 | Admin list showed the same pizza name and Pizza cutter. | Pass |
 
 ## Part 3: Robot Framework
 
 - `robot --version`: Robot Framework 7.5.1 on Python 3.12.10.
-- Step 3.2, failure message for the deliberately wrong title: not recorded; the correct title passed.
+- Step 3.2, deliberately wrong title: `Title should have been 'Web Form' but was 'Web form'.` (1 test, 0 passed, 1 failed). The correct-title suite passed in both full runs.
 - Full run 1: 3/3 passed, 20.22 seconds; QP-01 pizza `Lab Pizza 20261119-231824`, tool Scissors, 325 calories. Evidence: `robot/results/run1/`.
 - Full run 2: 3/3 passed, 20.38 seconds; QP-01 pizza `Lab Pizza 20261120-001717`, tool Pizza cutter, 325 calories. Evidence: `robot/results/run2/`.
 
 ## Part 4: Cypress
 
 - Node.js v24.16.0, npm 11.13.0, Cypress 16.2.1; Chrome 158 headless.
-- Step 4.3, failure message for the deliberately wrong title: not recorded; the correct title passed.
+- Step 4.3, deliberately wrong title: `Timed out retrying after 10000ms`; actual `Web form`, expected `Web Form` (0 passing, 1 failing). The correct-title spec passed.
 - Step 4.6, `POST /api/pizza`: status 200; the latest screenshot shows tool Pizza cutter and 450 calories per slice, matching the API response by assertion.
 - Step 4.7, admin list: `Lab Pizza 20261120-001832 (tool=Pizza cutter, ingredients_number=7) (newest)` in the latest screenshot.
-- Two QP-01 executions passed in 11 and 12 seconds. The second pizza was `Lab Pizza 20261120-001832`. `web-form.cy.js` passed twice when run separately, in 4 and 3 seconds. Videos and three QP-01 screenshots are in `cypress/cypress/`.
-- Combined command `npx cypress run --browser chrome` failed twice while switching from `pizza-scenario.cy.js` (passed) to `web-form.cy.js`: `* is not a valid URL`. The web form spec passed when run alone. A second full combined pass remains unverified.
+- Step 4.8: `npm test` passed twice, running both specs in separate Cypress processes each time. QP-01 took 11 and 10 seconds; the web form took about 3 seconds in each run. Videos and three QP-01 screenshots are in `cypress/cypress/`. Earlier QP-01 executions also passed in 11 and 12 seconds; the screenshot retained in Git shows `Lab Pizza 20261120-001832`.
+- A single Cypress process running both specs failed reproducibly at the transition with `* is not a valid URL`, in either spec order. The `npm test` script starts a fresh process per spec; this is a runner workaround, not a test assertion change.
 - Step 4.9, second browser: not attempted (optional).
 
 ## Part B

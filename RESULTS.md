@@ -1,52 +1,71 @@
-# UI lab results
+# ผลแล็บทดสอบหน้าเว็บ
 
-Tool parts that I chose: Part 3 Robot Framework and Part 4 Cypress.
+เครื่องมือที่เลือก: Part 3 Robot Framework และ Part 4 Cypress
 
 ## Part 0
 
-- Step 0.1, Chrome version: 158.0.8127.36 (Windows).
-- Step 0.3, ChromeDriver version: 158.0.8127.36, downloaded from Chrome for Testing. The local path is kept out of Git.
-- Step 0.4, locator of Pizza, Please!: `button[name="pizza-please"]`.
-- Step 0.4, locator of Excluded tools: `select` after Advanced is on.
-- Step 0.4, locator of Must be vegetarian: `#default-checkbox`.
-- Step 0.4, locator of Custom Pizza Name: `input#pizza-name`.
-- Step 0.5, manual attempt 1: `Lab Pizza 20261120-143015` returned Pizza cutter and 450 calories per slice; the rating message appeared, but the pizza was absent from the visible admin list even after Refresh. Step 7 was **not observed as passing**. See `manual-evidence/qp01-step5-recommendation-and-login-needed.png` and `qp01-attempt1-admin-absent.png`.
-- Step 0.5, manual attempt 2: `Lab Pizza 20261120 2times` returned Pizza cutter and 550 calories per slice. The admin list showed `Lab Pizza 20261120 2times (tool=Pizza cutter, ingredients_number=8)`, so step 7 passed. The name contains a date but no time; the step 5 rating message was not captured for this attempt. See `manual-evidence/qp01-attempt2-recommendation.png` and `qp01-attempt2-admin-list.png`.
-- Step 0.5, manual attempt 3: the home page showed the expected heading and advanced fields; max calories was 600, Knife was excluded, and vegetarian was checked. The recommendation showed `Lab Pizza 20261120-003142`, tool Pizza cutter, and 400 calories per slice. Rating without login displayed `Please log in first.` The admin page showed `Lab Pizza 20261120-003142 (tool=Pizza cutter, ingredients_number=6) (newest)`. All seven checks passed. See `manual-evidence/qp01-attempt3-full-customer-flow.png` and `qp01-attempt3-admin-list.png`.
+- ขั้น 0.1: ใช้ Chrome รุ่น 158.0.8127.36 บน Windows
+- ขั้น 0.3: ใช้ ChromeDriver รุ่น 158.0.8127.36 จาก Chrome for Testing ซึ่งตรงกับ Chrome ในเครื่อง ไฟล์โปรแกรมนี้อยู่ในเครื่องและไม่ถูก push ขึ้น Git
+- ขั้น 0.4: ปุ่ม Pizza, Please! ใช้ locator `button[name="pizza-please"]`
+- ขั้น 0.4: รายการ Excluded tools ใช้ `select` หลังเปิด Advanced
+- ขั้น 0.4: ช่อง Must be vegetarian ใช้ `#default-checkbox`
+- ขั้น 0.4: ช่อง Custom Pizza Name ใช้ `input#pizza-name`
 
-| Step | Actual result from manual attempt 3 | Pass or fail |
+### QP-01 ที่รันด้วยมือ
+
+รอบแรกใช้ชื่อ `Lab Pizza 20261120-143015` เว็บแนะนำ Pizza cutter และ 450 แคลอรีต่อชิ้น หลังลองให้คะแนนโดยไม่ล็อกอิน มีข้อความให้ล็อกอินก่อน แต่เมื่อเปิดหน้าแอดมินและกด Refresh แล้วยังไม่พบชื่อนี้ในรายการที่แสดง จึงบันทึกว่าขั้น 7 ของรอบแรกไม่ผ่านตามสิ่งที่เห็น ภาพอยู่ที่ `manual-evidence/qp01-step5-recommendation-and-login-needed.png` และ `qp01-attempt1-admin-absent.png`
+
+รอบที่สองใช้ชื่อ `Lab Pizza 20261120 2times` ได้ Pizza cutter และ 550 แคลอรีต่อชิ้น หน้าแอดมินแสดง `Lab Pizza 20261120 2times (tool=Pizza cutter, ingredients_number=8)` จึงตรวจเครื่องมือในขั้น 7 ได้ แต่ชื่อนี้มีวันที่โดยไม่มีเวลา และไม่มีภาพข้อความหลังลองให้คะแนนของรอบนี้ ภาพอยู่ที่ `manual-evidence/qp01-attempt2-recommendation.png` และ `qp01-attempt2-admin-list.png`
+
+รอบสุดท้ายใช้ชื่อ `Lab Pizza 20261120-003142` ภาพฝั่งลูกค้าแสดงค่าจำกัด 600, เลือก Knife ในรายการห้ามใช้ และติ๊ก Must be vegetarian ผลที่ได้คือ Pizza cutter กับ 400 แคลอรีต่อชิ้น เมื่อกด Love it! โดยไม่ล็อกอิน เว็บแสดง `Please log in first.` หน้าแอดมินแสดง `Lab Pizza 20261120-003142 (tool=Pizza cutter, ingredients_number=6) (newest)` เครื่องมือตรงกับผลฝั่งลูกค้า จึงผ่านทั้ง 7 ขั้นตอน ภาพอยู่ที่ `manual-evidence/qp01-attempt3-full-customer-flow.png` และ `qp01-attempt3-admin-list.png`
+
+| ขั้น | ผลจริงของรอบสุดท้าย | ผล |
 |------|-------------------------------------|--------------|
-| 1 | Home heading read `Looking to break out of your pizza routine?`. | Pass |
-| 2 | Max Calories per Slice, Excluded tools, Must be vegetarian and Custom Pizza Name were visible. | Pass |
-| 3 | Max calories 600, Knife selected as excluded, vegetarian checked, timestamped name entered. | Pass |
-| 4 | Name `Lab Pizza 20261120-003142`; tool Pizza cutter; 400 calories per slice. | Pass |
-| 5 | After Love it!, the page displayed `Please log in first.` | Pass |
-| 6 | Admin page showed `Latest pizza recommendations`. | Pass |
-| 7 | Admin list showed the same pizza name and Pizza cutter. | Pass |
+| 1 | หัวข้อหน้าแรกเป็น `Looking to break out of your pizza routine?` | ผ่าน |
+| 2 | เห็นช่อง Max Calories per Slice, Excluded tools, Must be vegetarian และ Custom Pizza Name | ผ่าน |
+| 3 | ใส่ 600, เลือก Knife เป็นเครื่องมือที่ห้ามใช้, ติ๊กมังสวิรัติ และตั้งชื่อพร้อมวันเวลา | ผ่าน |
+| 4 | ได้ชื่อ `Lab Pizza 20261120-003142`, เครื่องมือ Pizza cutter และ 400 แคลอรีต่อชิ้น | ผ่าน |
+| 5 | หลังคลิก Love it! หน้าเว็บแสดง `Please log in first.` | ผ่าน |
+| 6 | หน้าแอดมินแสดง `Latest pizza recommendations` | ผ่าน |
+| 7 | พบพิซซ่าชื่อเดียวกันในรายการ พร้อมเครื่องมือ Pizza cutter | ผ่าน |
 
 ## Part 3: Robot Framework
 
-- `robot --version`: Robot Framework 7.5.1 on Python 3.12.10.
-- Step 3.2, deliberately wrong title: `Title should have been 'Web Form' but was 'Web form'.` (1 test, 0 passed, 1 failed). The correct-title suite passed in both full runs.
-- Full run 1: 3/3 passed, 20.22 seconds; QP-01 pizza `Lab Pizza 20261119-231824`, tool Scissors, 325 calories. Evidence: `robot/results/run1/`.
-- Full run 2: 3/3 passed, 20.38 seconds; QP-01 pizza `Lab Pizza 20261120-001717`, tool Pizza cutter, 325 calories. Evidence: `robot/results/run2/`.
+`robot --version` แสดง Robot Framework 7.5.1 และ Python 3.12.10
+
+ในขั้น 3.2 ผมตั้งชื่อหน้าที่คาดหวังให้ผิดเป็น `Web Form` เพื่อดูว่าการตรวจจับข้อผิดพลาดทำงานหรือไม่ ผลคือ 1 test ไม่ผ่าน และได้ข้อความ `Title should have been 'Web Form' but was 'Web form'.` จากนั้นใช้ชื่อที่ถูกต้องในการรันเต็มทั้งสองรอบ ซึ่งผ่านทั้งหมด
+
+| รอบ | ผลการรันเต็ม | เวลา | พิซซ่าใน QP-01 | เครื่องมือ | แคลอรีต่อชิ้น | หลักฐาน |
+|-----|--------------|------|-----------------|------------|-----------------|----------|
+| 1 | ผ่าน 3/3 tests | 20.22 วินาที | `Lab Pizza 20261119-231824` | Scissors | 325 | `robot/results/run1/` |
+| 2 | ผ่าน 3/3 tests | 20.38 วินาที | `Lab Pizza 20261120-001717` | Pizza cutter | 325 | `robot/results/run2/` |
+
+ในแต่ละโฟลเดอร์ผลลัพธ์มี log, report และภาพของขั้นตอน QP-01 จึงเปิดดูได้ว่าการตรวจแต่ละจุดผ่านอย่างไร
 
 ## Part 4: Cypress
 
-- Node.js v24.16.0, npm 11.13.0, Cypress 16.2.1; Chrome 158 headless.
-- Step 4.3, deliberately wrong title: `Timed out retrying after 10000ms`; actual `Web form`, expected `Web Form` (0 passing, 1 failing). The correct-title spec passed.
-- Step 4.6, `POST /api/pizza`: status 200; the latest screenshot shows tool Pizza cutter and 450 calories per slice, matching the API response by assertion.
-- Step 4.7, admin list: `Lab Pizza 20261120-001832 (tool=Pizza cutter, ingredients_number=7) (newest)` in the latest screenshot.
-- Step 4.8: `npm test` passed twice, running both specs in separate Cypress processes each time. QP-01 took 11 and 10 seconds; the web form took about 3 seconds in each run. Videos and three QP-01 screenshots are in `cypress/cypress/`. Earlier QP-01 executions also passed in 11 and 12 seconds; the screenshot retained in Git shows `Lab Pizza 20261120-001832`.
-- A single Cypress process running both specs failed reproducibly at the transition with `* is not a valid URL`, in either spec order. The `npm test` script starts a fresh process per spec; this is a runner workaround, not a test assertion change.
-- Step 4.9, second browser: not attempted (optional).
+เครื่องที่ใช้รันมี Node.js v24.16.0, npm 11.13.0, Cypress 16.2.1 และ Chrome 158 แบบ headless
 
-## Part B
+ในขั้น 4.3 ผมตั้งชื่อหน้าที่คาดหวังให้ผิดเป็น `Web Form` เพื่อดูผลเมื่อ assertion ไม่ผ่าน Cypress แสดง `Timed out retrying after 10000ms` โดยค่าจริงคือ `Web form` และค่าที่ตั้งไว้คือ `Web Form` ผลรอบนั้นเป็น 0 passing, 1 failing เมื่อแก้กลับเป็นชื่อที่ถูกต้อง spec นี้ผ่าน
 
-1. QuickPizza uses `floating_filled` for three number inputs, so that id alone cannot identify Max Calories per Slice. The Robot resource uses the nearby label; Cypress uses the label's sibling input. Giving each number input its own unique id would make the locator shorter and easier to maintain.
-2. The step 7 comparison is a consistency oracle: the admin list must show the tool that step 4 recommended. It would catch a fault where the admin list stores or renders a different tool. Both Robot runs passed this comparison.
-3. The page does not expose a vegetarian assertion in the recommendation. A useful check would compare a `vegetarian` flag from the pizza API response, or inspect every ingredient against a trusted vegetarian catalog. The test would need that data exposed reliably by the page or server.
-4. Robot explicitly waits for the home heading, tool option, recommendation and admin list; its HTML log expands each keyword and screenshot. Cypress retries queries and assertions automatically and waits on `POST /api/pizza`; its command log and video show the sequence. The Cypress QP-01 spec was shorter to write, while Robot's resource file made the seven written steps easy to read. Both QP-01 specs passed; Cypress's combined runner hit the URL error described above.
-5. I would choose Robot Framework for Project 2. Its named keywords map directly to written system test steps, and changing a locator in one resource file repairs every test that uses it. It also produced two full passing reports with screenshots on this machine.
-6. In Part 3, change `${MAX CALORIES}` in `robot/resources/quickpizza.resource` if the calories input changes. `pizza_scenario.robot` uses a keyword and does not need a locator edit.
-7. In Part 4, QP-01 stays in one `it` because Cypress clears cookies between tests. Splitting steps 6 and 7 into another test could send that test to a different QuickPizza server, so its admin list might not contain the pizza created in the first test.
+ขั้น 4.6 ตรวจคำขอ `POST /api/pizza` ซึ่งตอบ status 200 และตรวจว่าค่าเครื่องมือกับแคลอรีจาก API ตรงกับหน้าเว็บ ภาพที่เก็บไว้แสดง Pizza cutter และ 450 แคลอรีต่อชิ้น ขั้น 4.7 ตรวจรายการแอดมิน พบ `Lab Pizza 20261120-001832 (tool=Pizza cutter, ingredients_number=7) (newest)`
+
+ขั้น 4.8 รัน `npm test` สองรอบ ทั้งสอง spec ผ่านในแต่ละรอบ QP-01 ใช้เวลา 11 และ 10 วินาที ส่วนแบบฟอร์มใช้เวลาประมาณ 3 วินาทีต่อรอบ วิดีโอและภาพ QP-01 สามภาพอยู่ใน `cypress/cypress/` ก่อนหน้านี้ QP-01 ยังเคยผ่านใน 11 และ 12 วินาที; ภาพที่เก็บใน Git แสดง `Lab Pizza 20261120-001832`
+
+มีข้อจำกัดของตัวรันบนเครื่องนี้: หากให้ Cypress process เดียวเปิดสอง spec ต่อกัน จะหยุดตอนเปลี่ยนไฟล์ด้วย `* is not a valid URL` ไม่ว่าจะสลับลำดับอย่างไร สคริปต์ `npm test` จึงเปิด process ใหม่ให้แต่ละ spec โดยไม่แก้ assertion ของการทดสอบ ขั้น 4.9 ซึ่งให้ลองเบราว์เซอร์ที่สองเป็นขั้นเสริม ยังไม่ได้ทำ
+
+## Part B: คำถามสะท้อนผลการทดลอง
+
+1. QuickPizza ใช้ id `floating_filled` ซ้ำกับช่องตัวเลขสามช่อง ถ้าใช้ id อย่างเดียว ตัวทดสอบจึงแยกช่อง Max Calories per Slice ออกจากอีกสองช่องไม่ได้ ใน Robot ผมหาช่องจากข้อความ label ที่อยู่ใกล้กัน ส่วน Cypress เลือก input ที่เป็นพี่น้องของ label นั้น หากแก้หน้าเว็บให้แต่ละช่องมี id ไม่ซ้ำ ตัวทดสอบจะใช้ locator ที่สั้นลง และเวลาช่องบนหน้าเว็บย้ายตำแหน่งก็แก้ไขง่ายขึ้น
+
+2. การเทียบเครื่องมือในขั้น 7 เป็น test oracle แบบตรวจความสอดคล้องของข้อมูล: เครื่องมือในรายการแอดมินต้องตรงกับเครื่องมือที่หน้าแนะนำพิซซ่าในขั้น 4 ถ้าระบบบันทึกเครื่องมือผิด หรือหน้าแอดมินแสดงค่าผิด การตรวจนี้จะไม่ผ่าน การรัน Robot ทั้งสองรอบผ่านจุดตรวจนี้ และภาพการรันด้วยมือรอบสุดท้ายก็แสดง Pizza cutter ตรงกันทั้งสองหน้า
+
+3. QP-01 ตรวจว่าติ๊กช่อง Must be vegetarian แต่ยังไม่ได้พิสูจน์ว่าพิซซ่าที่ได้เป็นมังสวิรัติจริง การตรวจเพิ่มทำได้โดยอ่านค่า `vegetarian` จากคำตอบของ API หรือเทียบส่วนผสมทุกอย่างกับรายการส่วนผสมมังสวิรัติที่เชื่อถือได้ ถ้าใช้วิธีแรก ตัวทดสอบต้องเข้าถึงคำตอบ API และเชื่อถือความหมายของค่านั้น ถ้าใช้วิธีหลัง ต้องมีข้อมูลอ้างอิงของส่วนผสม ไม่ใช่ตัดสินจากชื่อที่แสดงบนหน้าเว็บอย่างเดียว
+
+4. Robot รอหัวข้อหน้าเว็บ ตัวเลือกเครื่องมือ ผลพิซซ่า และรายการแอดมินด้วย keyword ที่เขียนไว้ชัดเจน ส่วน Cypress รอ element และ assertion ให้อัตโนมัติ และใช้คำขอ `POST /api/pizza` เป็นจุดรอผลจากเซิร์ฟเวอร์ QP-01 ใน Cypress เขียนสั้นกว่า แต่ Robot อ่านตามขั้น 1 ถึง 7 ได้ง่ายเพราะแยกคำสั่งไว้ใน resource file รายงาน HTML ของ Robot เปิดดู keyword และภาพแต่ละขั้นได้ ส่วน Cypress มี command log กับวิดีโอให้ย้อนดูการคลิกและผลบนหน้าเว็บ ทั้งสองชุดผ่าน QP-01 ส่วนปัญหา `* is not a valid URL` เกิดตอน Cypress เปลี่ยน spec ใน process เดียว จึงใช้คำสั่งรันที่แยก process ตามที่อธิบายไว้ข้างบน
+
+5. ถ้าต้องเลือกเครื่องมือสำหรับ Project 2 ผมจะใช้ Robot Framework เพราะชื่อ keyword สามารถเขียนให้ตรงกับขั้นตอนใน test case ที่เขียนด้วยมือได้ เมื่อ QuickPizza เปลี่ยน locator ผมแก้ที่ resource file จุดเดียวโดยไม่ต้องไล่แก้ทุก test อีกเหตุผลคือการรันเต็มสองรอบบนเครื่องนี้ผ่าน 3/3 tests และมีรายงานกับภาพให้ตรวจย้อนหลังได้
+
+6. ใน Part 3 ถ้าตำแหน่งช่องแคลอรีเปลี่ยน ให้แก้ `${MAX CALORIES}` ใน `robot/resources/quickpizza.resource` ตัวแปรนี้อยู่ใน resource file ที่ keyword สำหรับกรอกและตรวจค่าช่องแคลอรีเรียกใช้ร่วมกัน ไฟล์ `pizza_scenario.robot` เรียก keyword ตามขั้นทดสอบ จึงไม่ต้องแก้ locator ในไฟล์ test
+
+7. ใน Part 4 ผมเก็บ QP-01 ไว้ใน `it` เดียว เพราะ Cypress ล้าง cookies ก่อนเริ่มแต่ละ test QuickPizza ใช้ cookie เพื่อให้เบราว์เซอร์กลับไปยังเซิร์ฟเวอร์ตัวเดิม ถ้าแยกขั้น 6 และ 7 เป็น test ใหม่ หน้าแอดมินอาจไปอยู่บนเซิร์ฟเวอร์อีกตัวและไม่เห็นพิซซ่าที่สร้างใน test แรก การอยู่ใน test เดียวจึงทำให้ตรวจชื่อและเครื่องมือของพิซซ่ารอบนั้นได้ต่อเนื่อง

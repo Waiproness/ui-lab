@@ -9,4 +9,4 @@ Selected parts: **Part 3 Robot Framework** and **Part 4 Cypress**. Both implemen
 
 The Cypress 16.2.1 runner on this Windows machine reproducibly stopped while switching between specs with `* is not a valid URL`, in either spec order. `npm test` runs each spec in a fresh Cypress process so one command checks both.
 
-`manual-evidence/` holds screenshots supplied from the hand run, including a timestamped pizza in the admin list. See [RESULTS.md](RESULTS.md) for the exact observations and which steps were not captured in the same attempt.
+`manual-evidence/` holds screenshots supplied from the hand run. Attempt 3 shows all seven QP-01 checks passing across the customer page and admin list. See [RESULTS.md](RESULTS.md) for the observed results, including earlier attempts.

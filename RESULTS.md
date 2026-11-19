@@ -11,15 +11,16 @@ Tool parts that I chose: Part 3 Robot Framework and Part 4 Cypress.
 - Step 0.4, locator of Must be vegetarian: `#default-checkbox`.
 - Step 0.4, locator of Custom Pizza Name: `input#pizza-name`.
 - Step 0.5, manual attempt 1: `Lab Pizza 20261120-143015` returned Pizza cutter and 450 calories per slice; the rating message appeared, but the pizza was absent from the visible admin list even after Refresh. Step 7 was **not observed as passing**. See `manual-evidence/qp01-step5-recommendation-and-login-needed.png` and `qp01-attempt1-admin-absent.png`.
-- Step 0.5, manual attempt 2: `Lab Pizza 20261120 2times` returned Pizza cutter and 550 calories per slice. The admin list showed `Lab Pizza 20261120 2times (tool=Pizza cutter, ingredients_number=8)`, so step 7 passed. The name contains a date but **does not contain a time in the required `YYYYMMDD-HHMMSS` format**; the step 5 rating message was not captured for this attempt. See `manual-evidence/qp01-attempt2-recommendation.png` and `qp01-attempt2-admin-list.png`.
+- Step 0.5, manual attempt 2: `Lab Pizza 20261120 2times` returned Pizza cutter and 550 calories per slice. The admin list showed `Lab Pizza 20261120 2times (tool=Pizza cutter, ingredients_number=8)`, so step 7 passed. The name contains a date but no time; the step 5 rating message was not captured for this attempt. See `manual-evidence/qp01-attempt2-recommendation.png` and `qp01-attempt2-admin-list.png`.
+- Step 0.5, manual attempt 3: the recommendation showed `Lab Pizza 20261120-003142`, tool Pizza cutter, and 400 calories per slice. The admin page showed `Lab Pizza 20261120-003142 (tool=Pizza cutter, ingredients_number=6) (newest)`. The same-tool check passed. The rating message for this exact pizza was not captured. See `manual-evidence/qp01-attempt3-recommendation.png` and `qp01-attempt3-admin-list.png`.
 
-| Step | Actual result from manual attempt 2 | Pass or fail |
+| Step | Actual result from manual attempt 3 | Pass or fail |
 |------|-------------------------------------|--------------|
-| 1 | Home heading matched the expected text. | Pass |
-| 2 | All four advanced fields were visible. | Pass |
-| 3 | Limit 600, excluded Knife, vegetarian selected, name `Lab Pizza 20261120 2times`. | Partial: name format |
-| 4 | Name matched; tool Pizza cutter; 550 calories per slice. | Pass |
-| 5 | Rating response was not captured for attempt 2. | Unverified |
+| 1 | Home heading was not captured for this attempt. | Unverified |
+| 2 | Advanced fields were not captured for this attempt. | Unverified |
+| 3 | Field values were not captured for this attempt. | Unverified |
+| 4 | Name `Lab Pizza 20261120-003142`; tool Pizza cutter; 400 calories per slice. | Pass |
+| 5 | Rating response was not captured for this attempt. | Unverified |
 | 6 | Admin page showed `Latest pizza recommendations`. | Pass |
 | 7 | Admin list showed the same pizza name and Pizza cutter. | Pass |
 

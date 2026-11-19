@@ -1,0 +1,13 @@
+target/
+.venv/
+node_modules/
+__pycache__/
+.DS_Store
+.idea/
+.vscode/
+.drivers/
+chromedriver-win64.zip
+robot/output.xml
+robot/log.html
+robot/report.html
+robot/*.png
